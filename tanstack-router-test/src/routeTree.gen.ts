@@ -10,12 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestRouteImport } from './routes/test'
-import { Route as SettingsRouteRouteImport } from './routes/settings/route'
+import { Route as SlugRouteRouteImport } from './routes/slug/route'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SettingsIndexRouteImport } from './routes/settings/index'
+import { Route as SlugIndexRouteImport } from './routes/slug/index'
+import { Route as ParamsIndexRouteImport } from './routes/params/index'
 import { Route as TestNestedRouteImport } from './routes/test.nested'
-import { Route as SettingsNotificationsRouteImport } from './routes/settings/notifications'
-import { Route as SettingsSettingsIdRouteImport } from './routes/settings/$settingsId'
+import { Route as SlugNotificationsRouteImport } from './routes/slug/notifications'
+import { Route as SlugSlugRouteImport } from './routes/slug/$slug'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 
 const TestRoute = TestRouteImport.update({
@@ -23,9 +24,9 @@ const TestRoute = TestRouteImport.update({
   path: '/test',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SettingsRouteRoute = SettingsRouteRouteImport.update({
-  id: '/settings',
-  path: '/settings',
+const SlugRouteRoute = SlugRouteRouteImport.update({
+  id: '/slug',
+  path: '/slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -33,25 +34,30 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SettingsIndexRoute = SettingsIndexRouteImport.update({
+const SlugIndexRoute = SlugIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => SettingsRouteRoute,
+  getParentRoute: () => SlugRouteRoute,
+} as any)
+const ParamsIndexRoute = ParamsIndexRouteImport.update({
+  id: '/params/',
+  path: '/params/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const TestNestedRoute = TestNestedRouteImport.update({
   id: '/nested',
   path: '/nested',
   getParentRoute: () => TestRoute,
 } as any)
-const SettingsNotificationsRoute = SettingsNotificationsRouteImport.update({
+const SlugNotificationsRoute = SlugNotificationsRouteImport.update({
   id: '/notifications',
   path: '/notifications',
-  getParentRoute: () => SettingsRouteRoute,
+  getParentRoute: () => SlugRouteRoute,
 } as any)
-const SettingsSettingsIdRoute = SettingsSettingsIdRouteImport.update({
-  id: '/$settingsId',
-  path: '/$settingsId',
-  getParentRoute: () => SettingsRouteRoute,
+const SlugSlugRoute = SlugSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => SlugRouteRoute,
 } as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/demo/tanstack-query',
@@ -61,71 +67,78 @@ const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/settings': typeof SettingsRouteRouteWithChildren
+  '/slug': typeof SlugRouteRouteWithChildren
   '/test': typeof TestRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/settings/$settingsId': typeof SettingsSettingsIdRoute
-  '/settings/notifications': typeof SettingsNotificationsRoute
+  '/slug/$slug': typeof SlugSlugRoute
+  '/slug/notifications': typeof SlugNotificationsRoute
   '/test/nested': typeof TestNestedRoute
-  '/settings/': typeof SettingsIndexRoute
+  '/params': typeof ParamsIndexRoute
+  '/slug/': typeof SlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/test': typeof TestRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/settings/$settingsId': typeof SettingsSettingsIdRoute
-  '/settings/notifications': typeof SettingsNotificationsRoute
+  '/slug/$slug': typeof SlugSlugRoute
+  '/slug/notifications': typeof SlugNotificationsRoute
   '/test/nested': typeof TestNestedRoute
-  '/settings': typeof SettingsIndexRoute
+  '/params': typeof ParamsIndexRoute
+  '/slug': typeof SlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/settings': typeof SettingsRouteRouteWithChildren
+  '/slug': typeof SlugRouteRouteWithChildren
   '/test': typeof TestRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/settings/$settingsId': typeof SettingsSettingsIdRoute
-  '/settings/notifications': typeof SettingsNotificationsRoute
+  '/slug/$slug': typeof SlugSlugRoute
+  '/slug/notifications': typeof SlugNotificationsRoute
   '/test/nested': typeof TestNestedRoute
-  '/settings/': typeof SettingsIndexRoute
+  '/params/': typeof ParamsIndexRoute
+  '/slug/': typeof SlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/settings'
+    | '/slug'
     | '/test'
     | '/demo/tanstack-query'
-    | '/settings/$settingsId'
-    | '/settings/notifications'
+    | '/slug/$slug'
+    | '/slug/notifications'
     | '/test/nested'
-    | '/settings/'
+    | '/params'
+    | '/slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/test'
     | '/demo/tanstack-query'
-    | '/settings/$settingsId'
-    | '/settings/notifications'
+    | '/slug/$slug'
+    | '/slug/notifications'
     | '/test/nested'
-    | '/settings'
+    | '/params'
+    | '/slug'
   id:
     | '__root__'
     | '/'
-    | '/settings'
+    | '/slug'
     | '/test'
     | '/demo/tanstack-query'
-    | '/settings/$settingsId'
-    | '/settings/notifications'
+    | '/slug/$slug'
+    | '/slug/notifications'
     | '/test/nested'
-    | '/settings/'
+    | '/params/'
+    | '/slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SettingsRouteRoute: typeof SettingsRouteRouteWithChildren
+  SlugRouteRoute: typeof SlugRouteRouteWithChildren
   TestRoute: typeof TestRouteWithChildren
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  ParamsIndexRoute: typeof ParamsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -137,11 +150,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TestRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteRouteImport
+    '/slug': {
+      id: '/slug'
+      path: '/slug'
+      fullPath: '/slug'
+      preLoaderRoute: typeof SlugRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -151,12 +164,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/settings/': {
-      id: '/settings/'
+    '/slug/': {
+      id: '/slug/'
       path: '/'
-      fullPath: '/settings/'
-      preLoaderRoute: typeof SettingsIndexRouteImport
-      parentRoute: typeof SettingsRouteRoute
+      fullPath: '/slug/'
+      preLoaderRoute: typeof SlugIndexRouteImport
+      parentRoute: typeof SlugRouteRoute
+    }
+    '/params/': {
+      id: '/params/'
+      path: '/params'
+      fullPath: '/params'
+      preLoaderRoute: typeof ParamsIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/test/nested': {
       id: '/test/nested'
@@ -165,19 +185,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TestNestedRouteImport
       parentRoute: typeof TestRoute
     }
-    '/settings/notifications': {
-      id: '/settings/notifications'
+    '/slug/notifications': {
+      id: '/slug/notifications'
       path: '/notifications'
-      fullPath: '/settings/notifications'
-      preLoaderRoute: typeof SettingsNotificationsRouteImport
-      parentRoute: typeof SettingsRouteRoute
+      fullPath: '/slug/notifications'
+      preLoaderRoute: typeof SlugNotificationsRouteImport
+      parentRoute: typeof SlugRouteRoute
     }
-    '/settings/$settingsId': {
-      id: '/settings/$settingsId'
-      path: '/$settingsId'
-      fullPath: '/settings/$settingsId'
-      preLoaderRoute: typeof SettingsSettingsIdRouteImport
-      parentRoute: typeof SettingsRouteRoute
+    '/slug/$slug': {
+      id: '/slug/$slug'
+      path: '/$slug'
+      fullPath: '/slug/$slug'
+      preLoaderRoute: typeof SlugSlugRouteImport
+      parentRoute: typeof SlugRouteRoute
     }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
@@ -189,20 +209,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface SettingsRouteRouteChildren {
-  SettingsSettingsIdRoute: typeof SettingsSettingsIdRoute
-  SettingsNotificationsRoute: typeof SettingsNotificationsRoute
-  SettingsIndexRoute: typeof SettingsIndexRoute
+interface SlugRouteRouteChildren {
+  SlugSlugRoute: typeof SlugSlugRoute
+  SlugNotificationsRoute: typeof SlugNotificationsRoute
+  SlugIndexRoute: typeof SlugIndexRoute
 }
 
-const SettingsRouteRouteChildren: SettingsRouteRouteChildren = {
-  SettingsSettingsIdRoute: SettingsSettingsIdRoute,
-  SettingsNotificationsRoute: SettingsNotificationsRoute,
-  SettingsIndexRoute: SettingsIndexRoute,
+const SlugRouteRouteChildren: SlugRouteRouteChildren = {
+  SlugSlugRoute: SlugSlugRoute,
+  SlugNotificationsRoute: SlugNotificationsRoute,
+  SlugIndexRoute: SlugIndexRoute,
 }
 
-const SettingsRouteRouteWithChildren = SettingsRouteRoute._addFileChildren(
-  SettingsRouteRouteChildren,
+const SlugRouteRouteWithChildren = SlugRouteRoute._addFileChildren(
+  SlugRouteRouteChildren,
 )
 
 interface TestRouteChildren {
@@ -217,9 +237,10 @@ const TestRouteWithChildren = TestRoute._addFileChildren(TestRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SettingsRouteRoute: SettingsRouteRouteWithChildren,
+  SlugRouteRoute: SlugRouteRouteWithChildren,
   TestRoute: TestRouteWithChildren,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  ParamsIndexRoute: ParamsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

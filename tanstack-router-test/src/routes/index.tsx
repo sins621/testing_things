@@ -41,15 +41,16 @@ function App() {
           Learn TanStack
         </a>
         <Link to="/test">Test</Link>
-        <Link to="/settings/$settingsId" params={{ settingsId: '3' }} preload="intent">
+        <Link to="/slug/$slug" params={{ slug: '3' }} preload="intent">
           Test
-          <MatchRoute to="/settings/$settingsId" pending>
+          <MatchRoute to="/slug/$slug" pending>
             <span>Loading...</span>
           </MatchRoute>
         </Link>
+        <Link to="/params">To Params</Link>
         <button
           style={{ cursor: 'pointer' }}
-          onClick={() => navigate({ to: '/settings' })}
+          onClick={() => navigate({ to: '/slug' })}
         >
           Navigate
         </button>
