@@ -1,16 +1,16 @@
-import LoadingTest from "./_components/json-test";
-import { Suspense } from "react";
-
 export default async function Page({
-    params,
+  params,
 }: {
-    params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>;
 }) {
-    const { slug } = await params;
-
-    return (
-        <Suspense fallback={<div>Loading</div>}>
-            <LoadingTest slug={slug} />
-        </Suspense>
-    );
+  const { slug } = await params;
+  const res = await fetch(
+    `https://jsonplaceholder.typicode.com/todos/${slug}`,
+    {
+      cache: "no-store",
+    },
+  );
+  if (!res.ok) throw new Error("Failed to fetch data");
+  const json = await res.json();
+  return <div>My Post: {JSON.stringify(json)}</div>;
 }
