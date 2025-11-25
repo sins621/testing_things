@@ -1,4 +1,9 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import {
+  createFileRoute,
+  Link,
+  MatchRoute,
+  useNavigate,
+} from '@tanstack/react-router'
 import logo from '../logo.svg'
 
 export const Route = createFileRoute('/')({
@@ -6,6 +11,8 @@ export const Route = createFileRoute('/')({
 })
 
 function App() {
+  const navigate = useNavigate()
+
   return (
     <div className="text-center">
       <header className="min-h-screen flex flex-col items-center justify-center bg-[#282c34] text-white text-[calc(10px+2vmin)]">
@@ -34,9 +41,18 @@ function App() {
           Learn TanStack
         </a>
         <Link to="/test">Test</Link>
-        <Link to="/settings/$settingsId" params={{ settingsId: '3' }}>
+        <Link to="/settings/$settingsId" params={{ settingsId: '3' }} preload="intent">
           Test
+          <MatchRoute to="/settings/$settingsId" pending>
+            <span>Loading...</span>
+          </MatchRoute>
         </Link>
+        <button
+          style={{ cursor: 'pointer' }}
+          onClick={() => navigate({ to: '/settings' })}
+        >
+          Navigate
+        </button>
       </header>
     </div>
   )
