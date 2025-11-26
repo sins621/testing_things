@@ -48,6 +48,7 @@ function App() {
           </MatchRoute>
         </Link>
         <Link to="/params">To Params</Link>
+        <Link to="/query">To Query</Link>
         <button
           style={{ cursor: 'pointer' }}
           onClick={() => navigate({ to: '/slug' })}

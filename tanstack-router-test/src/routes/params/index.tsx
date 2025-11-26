@@ -1,8 +1,4 @@
-import {
-  createFileRoute,
-  Link,
-  MatchRoute
-} from '@tanstack/react-router'
+import { createFileRoute, Link, MatchRoute } from '@tanstack/react-router'
 import { Suspense, use } from 'react'
 import { z } from 'zod'
 
@@ -17,8 +13,8 @@ function sleep(ms: number) {
 export const Route = createFileRoute('/params/')({
   validateSearch: postsSchema,
   beforeLoad: () => ({
-    fetchPosts: async (userId: number) => {
-      await sleep(3_600)
+    fetchPosts: async (userId: number, sleepMs: number) => {
+      await sleep(sleepMs)
       const res = await fetch(
         `https://jsonplaceholder.typicode.com/posts?userId=${userId}`,
       )
@@ -28,7 +24,7 @@ export const Route = createFileRoute('/params/')({
   }),
   loaderDeps: ({ search: { userId } }) => ({ userId }),
   loader: async ({ context: { fetchPosts }, deps: { userId } }) => {
-    return { slowData: fetchPosts(userId) }
+    return { slowData: fetchPosts(userId, 1000) }
   },
   component: RouteComponent,
   errorComponent: () => <div>Error</div>,

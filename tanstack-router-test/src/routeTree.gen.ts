@@ -13,11 +13,14 @@ import { Route as TestRouteImport } from './routes/test'
 import { Route as SlugRouteRouteImport } from './routes/slug/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SlugIndexRouteImport } from './routes/slug/index'
+import { Route as QueryIndexRouteImport } from './routes/query/index'
 import { Route as ParamsIndexRouteImport } from './routes/params/index'
 import { Route as TestNestedRouteImport } from './routes/test.nested'
 import { Route as SlugNotificationsRouteImport } from './routes/slug/notifications'
 import { Route as SlugSlugRouteImport } from './routes/slug/$slug'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
+import { Route as ContextContextRouteRouteImport } from './routes/context/_context/route'
+import { Route as ContextContextRouteAIndexRouteImport } from './routes/context/_context/route-a/index'
 
 const TestRoute = TestRouteImport.update({
   id: '/test',
@@ -38,6 +41,11 @@ const SlugIndexRoute = SlugIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => SlugRouteRoute,
+} as any)
+const QueryIndexRoute = QueryIndexRouteImport.update({
+  id: '/query/',
+  path: '/query/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ParamsIndexRoute = ParamsIndexRouteImport.update({
   id: '/params/',
@@ -64,39 +72,58 @@ const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   path: '/demo/tanstack-query',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContextContextRouteRoute = ContextContextRouteRouteImport.update({
+  id: '/_context',
+  getParentRoute: () => ContextRoute,
+} as any)
+const ContextContextRouteAIndexRoute =
+  ContextContextRouteAIndexRouteImport.update({
+    id: '/route-a/',
+    path: '/route-a/',
+    getParentRoute: () => ContextContextRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/slug': typeof SlugRouteRouteWithChildren
   '/test': typeof TestRouteWithChildren
+  '/context': typeof ContextContextRouteRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/slug/$slug': typeof SlugSlugRoute
   '/slug/notifications': typeof SlugNotificationsRoute
   '/test/nested': typeof TestNestedRoute
   '/params': typeof ParamsIndexRoute
+  '/query': typeof QueryIndexRoute
   '/slug/': typeof SlugIndexRoute
+  '/context/route-a': typeof ContextContextRouteAIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/test': typeof TestRouteWithChildren
+  '/context': typeof ContextContextRouteRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/slug/$slug': typeof SlugSlugRoute
   '/slug/notifications': typeof SlugNotificationsRoute
   '/test/nested': typeof TestNestedRoute
   '/params': typeof ParamsIndexRoute
+  '/query': typeof QueryIndexRoute
   '/slug': typeof SlugIndexRoute
+  '/context/route-a': typeof ContextContextRouteAIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/slug': typeof SlugRouteRouteWithChildren
   '/test': typeof TestRouteWithChildren
+  '/context/_context': typeof ContextContextRouteRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/slug/$slug': typeof SlugSlugRoute
   '/slug/notifications': typeof SlugNotificationsRoute
   '/test/nested': typeof TestNestedRoute
   '/params/': typeof ParamsIndexRoute
+  '/query/': typeof QueryIndexRoute
   '/slug/': typeof SlugIndexRoute
+  '/context/_context/route-a/': typeof ContextContextRouteAIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -104,33 +131,42 @@ export interface FileRouteTypes {
     | '/'
     | '/slug'
     | '/test'
+    | '/context'
     | '/demo/tanstack-query'
     | '/slug/$slug'
     | '/slug/notifications'
     | '/test/nested'
     | '/params'
+    | '/query'
     | '/slug/'
+    | '/context/route-a'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/test'
+    | '/context'
     | '/demo/tanstack-query'
     | '/slug/$slug'
     | '/slug/notifications'
     | '/test/nested'
     | '/params'
+    | '/query'
     | '/slug'
+    | '/context/route-a'
   id:
     | '__root__'
     | '/'
     | '/slug'
     | '/test'
+    | '/context/_context'
     | '/demo/tanstack-query'
     | '/slug/$slug'
     | '/slug/notifications'
     | '/test/nested'
     | '/params/'
+    | '/query/'
     | '/slug/'
+    | '/context/_context/route-a/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -139,6 +175,7 @@ export interface RootRouteChildren {
   TestRoute: typeof TestRouteWithChildren
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   ParamsIndexRoute: typeof ParamsIndexRoute
+  QueryIndexRoute: typeof QueryIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -170,6 +207,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/slug/'
       preLoaderRoute: typeof SlugIndexRouteImport
       parentRoute: typeof SlugRouteRoute
+    }
+    '/query/': {
+      id: '/query/'
+      path: '/query'
+      fullPath: '/query'
+      preLoaderRoute: typeof QueryIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/params/': {
       id: '/params/'
@@ -206,6 +250,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoTanstackQueryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/context/_context': {
+      id: '/context/_context'
+      path: ''
+      fullPath: '/context'
+      preLoaderRoute: typeof ContextContextRouteRouteImport
+      parentRoute: typeof ContextRoute
+    }
+    '/context/_context/route-a/': {
+      id: '/context/_context/route-a/'
+      path: '/route-a'
+      fullPath: '/context/route-a'
+      preLoaderRoute: typeof ContextContextRouteAIndexRouteImport
+      parentRoute: typeof ContextContextRouteRoute
+    }
   }
 }
 
@@ -241,6 +299,7 @@ const rootRouteChildren: RootRouteChildren = {
   TestRoute: TestRouteWithChildren,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   ParamsIndexRoute: ParamsIndexRoute,
+  QueryIndexRoute: QueryIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
