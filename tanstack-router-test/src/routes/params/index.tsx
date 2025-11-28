@@ -1,4 +1,9 @@
-import { createFileRoute, Link, MatchRoute } from '@tanstack/react-router'
+import {
+  createFileRoute,
+  Link,
+  MatchRoute,
+  notFound,
+} from '@tanstack/react-router'
 import { Suspense, use } from 'react'
 import { z } from 'zod'
 
@@ -28,6 +33,7 @@ export const Route = createFileRoute('/params/')({
   },
   component: RouteComponent,
   errorComponent: () => <div>Error</div>,
+  notFoundComponent: () => <div>Not Found</div>,
 })
 
 function RouteComponent() {
