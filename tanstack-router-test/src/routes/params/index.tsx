@@ -1,8 +1,7 @@
 import {
-  createFileRoute,
-  Link,
-  MatchRoute,
-  notFound,
+    createFileRoute,
+    Link,
+    MatchRoute
 } from '@tanstack/react-router'
 import { Suspense, use } from 'react'
 import { z } from 'zod'

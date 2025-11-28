@@ -8,13 +8,14 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestRouteImport } from './routes/test'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as SlugRouteRouteImport } from './routes/slug/route'
+import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SlugIndexRouteImport } from './routes/slug/index'
+import { Route as Router_stateIndexRouteImport } from './routes/router_state/index'
 import { Route as QueryIndexRouteImport } from './routes/query/index'
 import { Route as ParamsIndexRouteImport } from './routes/params/index'
 import { Route as BlockerIndexRouteImport } from './routes/blocker/index'
@@ -22,24 +23,27 @@ import { Route as TestNestedRouteImport } from './routes/test.nested'
 import { Route as SlugNotificationsRouteImport } from './routes/slug/notifications'
 import { Route as SlugSlugRouteImport } from './routes/slug/$slug'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
+import { Route as AuthDashboardRouteImport } from './routes/_auth/dashboard'
 import { Route as ContextContextRouteRouteImport } from './routes/context/_context/route'
 import { Route as ContextContextRouteAIndexRouteImport } from './routes/context/_context/route-a/index'
 
-const ContextRouteImport = createFileRoute('/context')()
-
-const ContextRoute = ContextRouteImport.update({
-  id: '/context',
-  path: '/context',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const TestRoute = TestRouteImport.update({
   id: '/test',
   path: '/test',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SlugRouteRoute = SlugRouteRouteImport.update({
   id: '/slug',
   path: '/slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRouteRoute = AuthRouteRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -51,6 +55,11 @@ const SlugIndexRoute = SlugIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => SlugRouteRoute,
+} as any)
+const Router_stateIndexRoute = Router_stateIndexRouteImport.update({
+  id: '/router_state/',
+  path: '/router_state/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const QueryIndexRoute = QueryIndexRouteImport.update({
   id: '/query/',
@@ -87,6 +96,11 @@ const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   path: '/demo/tanstack-query',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthDashboardRoute = AuthDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
 const ContextContextRouteRoute = ContextContextRouteRouteImport.update({
   id: '/_context',
   getParentRoute: () => ContextRoute,
@@ -101,8 +115,10 @@ const ContextContextRouteAIndexRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/slug': typeof SlugRouteRouteWithChildren
+  '/login': typeof LoginRoute
   '/test': typeof TestRouteWithChildren
   '/context': typeof ContextContextRouteRouteWithChildren
+  '/dashboard': typeof AuthDashboardRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/slug/$slug': typeof SlugSlugRoute
   '/slug/notifications': typeof SlugNotificationsRoute
@@ -110,13 +126,16 @@ export interface FileRoutesByFullPath {
   '/blocker': typeof BlockerIndexRoute
   '/params': typeof ParamsIndexRoute
   '/query': typeof QueryIndexRoute
+  '/router_state': typeof Router_stateIndexRoute
   '/slug/': typeof SlugIndexRoute
   '/context/route-a': typeof ContextContextRouteAIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/test': typeof TestRouteWithChildren
   '/context': typeof ContextContextRouteRouteWithChildren
+  '/dashboard': typeof AuthDashboardRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/slug/$slug': typeof SlugSlugRoute
   '/slug/notifications': typeof SlugNotificationsRoute
@@ -124,16 +143,19 @@ export interface FileRoutesByTo {
   '/blocker': typeof BlockerIndexRoute
   '/params': typeof ParamsIndexRoute
   '/query': typeof QueryIndexRoute
+  '/router_state': typeof Router_stateIndexRoute
   '/slug': typeof SlugIndexRoute
   '/context/route-a': typeof ContextContextRouteAIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteRouteWithChildren
   '/slug': typeof SlugRouteRouteWithChildren
+  '/login': typeof LoginRoute
   '/test': typeof TestRouteWithChildren
-  '/context': typeof ContextRouteWithChildren
   '/context/_context': typeof ContextContextRouteRouteWithChildren
+  '/_auth/dashboard': typeof AuthDashboardRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/slug/$slug': typeof SlugSlugRoute
   '/slug/notifications': typeof SlugNotificationsRoute
@@ -141,6 +163,7 @@ export interface FileRoutesById {
   '/blocker/': typeof BlockerIndexRoute
   '/params/': typeof ParamsIndexRoute
   '/query/': typeof QueryIndexRoute
+  '/router_state/': typeof Router_stateIndexRoute
   '/slug/': typeof SlugIndexRoute
   '/context/_context/route-a/': typeof ContextContextRouteAIndexRoute
 }
@@ -149,8 +172,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/slug'
+    | '/login'
     | '/test'
     | '/context'
+    | '/dashboard'
     | '/demo/tanstack-query'
     | '/slug/$slug'
     | '/slug/notifications'
@@ -158,13 +183,16 @@ export interface FileRouteTypes {
     | '/blocker'
     | '/params'
     | '/query'
+    | '/router_state'
     | '/slug/'
     | '/context/route-a'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/login'
     | '/test'
     | '/context'
+    | '/dashboard'
     | '/demo/tanstack-query'
     | '/slug/$slug'
     | '/slug/notifications'
@@ -172,15 +200,18 @@ export interface FileRouteTypes {
     | '/blocker'
     | '/params'
     | '/query'
+    | '/router_state'
     | '/slug'
     | '/context/route-a'
   id:
     | '__root__'
     | '/'
+    | '/_auth'
     | '/slug'
+    | '/login'
     | '/test'
-    | '/context'
     | '/context/_context'
+    | '/_auth/dashboard'
     | '/demo/tanstack-query'
     | '/slug/$slug'
     | '/slug/notifications'
@@ -188,30 +219,26 @@ export interface FileRouteTypes {
     | '/blocker/'
     | '/params/'
     | '/query/'
+    | '/router_state/'
     | '/slug/'
     | '/context/_context/route-a/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
   SlugRouteRoute: typeof SlugRouteRouteWithChildren
+  LoginRoute: typeof LoginRoute
   TestRoute: typeof TestRouteWithChildren
-  ContextRoute: typeof ContextRouteWithChildren
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   BlockerIndexRoute: typeof BlockerIndexRoute
   ParamsIndexRoute: typeof ParamsIndexRoute
   QueryIndexRoute: typeof QueryIndexRoute
+  Router_stateIndexRoute: typeof Router_stateIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/context': {
-      id: '/context'
-      path: '/context'
-      fullPath: '/context'
-      preLoaderRoute: typeof ContextRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/test': {
       id: '/test'
       path: '/test'
@@ -219,11 +246,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TestRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/slug': {
       id: '/slug'
       path: '/slug'
       fullPath: '/slug'
       preLoaderRoute: typeof SlugRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -239,6 +280,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/slug/'
       preLoaderRoute: typeof SlugIndexRouteImport
       parentRoute: typeof SlugRouteRoute
+    }
+    '/router_state/': {
+      id: '/router_state/'
+      path: '/router_state'
+      fullPath: '/router_state'
+      preLoaderRoute: typeof Router_stateIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/query/': {
       id: '/query/'
@@ -289,9 +337,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoTanstackQueryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth/dashboard': {
+      id: '/_auth/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthDashboardRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
     '/context/_context': {
       id: '/context/_context'
-      path: '/context'
+      path: ''
       fullPath: '/context'
       preLoaderRoute: typeof ContextContextRouteRouteImport
       parentRoute: typeof ContextRoute
@@ -305,6 +360,18 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AuthRouteRouteChildren {
+  AuthDashboardRoute: typeof AuthDashboardRoute
+}
+
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthDashboardRoute: AuthDashboardRoute,
+}
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
 
 interface SlugRouteRouteChildren {
   SlugSlugRoute: typeof SlugSlugRoute
@@ -332,37 +399,17 @@ const TestRouteChildren: TestRouteChildren = {
 
 const TestRouteWithChildren = TestRoute._addFileChildren(TestRouteChildren)
 
-interface ContextContextRouteRouteChildren {
-  ContextContextRouteAIndexRoute: typeof ContextContextRouteAIndexRoute
-}
-
-const ContextContextRouteRouteChildren: ContextContextRouteRouteChildren = {
-  ContextContextRouteAIndexRoute: ContextContextRouteAIndexRoute,
-}
-
-const ContextContextRouteRouteWithChildren =
-  ContextContextRouteRoute._addFileChildren(ContextContextRouteRouteChildren)
-
-interface ContextRouteChildren {
-  ContextContextRouteRoute: typeof ContextContextRouteRouteWithChildren
-}
-
-const ContextRouteChildren: ContextRouteChildren = {
-  ContextContextRouteRoute: ContextContextRouteRouteWithChildren,
-}
-
-const ContextRouteWithChildren =
-  ContextRoute._addFileChildren(ContextRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
   SlugRouteRoute: SlugRouteRouteWithChildren,
+  LoginRoute: LoginRoute,
   TestRoute: TestRouteWithChildren,
-  ContextRoute: ContextRouteWithChildren,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   BlockerIndexRoute: BlockerIndexRoute,
   ParamsIndexRoute: ParamsIndexRoute,
   QueryIndexRoute: QueryIndexRoute,
+  Router_stateIndexRoute: Router_stateIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
