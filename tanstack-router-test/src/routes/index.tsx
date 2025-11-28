@@ -49,6 +49,7 @@ function App() {
         </Link>
         <Link to="/params">To Params</Link>
         <Link to="/query">To Query</Link>
+        <Link to="/blocker">To Blocker</Link>
         <button
           style={{ cursor: 'pointer' }}
           onClick={() => navigate({ to: '/slug' })}

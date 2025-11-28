@@ -8,6 +8,8 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createFileRoute } from '@tanstack/react-router'
+
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TestRouteImport } from './routes/test'
 import { Route as SlugRouteRouteImport } from './routes/slug/route'
@@ -15,6 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SlugIndexRouteImport } from './routes/slug/index'
 import { Route as QueryIndexRouteImport } from './routes/query/index'
 import { Route as ParamsIndexRouteImport } from './routes/params/index'
+import { Route as BlockerIndexRouteImport } from './routes/blocker/index'
 import { Route as TestNestedRouteImport } from './routes/test.nested'
 import { Route as SlugNotificationsRouteImport } from './routes/slug/notifications'
 import { Route as SlugSlugRouteImport } from './routes/slug/$slug'
@@ -22,6 +25,13 @@ import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-qu
 import { Route as ContextContextRouteRouteImport } from './routes/context/_context/route'
 import { Route as ContextContextRouteAIndexRouteImport } from './routes/context/_context/route-a/index'
 
+const ContextRouteImport = createFileRoute('/context')()
+
+const ContextRoute = ContextRouteImport.update({
+  id: '/context',
+  path: '/context',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TestRoute = TestRouteImport.update({
   id: '/test',
   path: '/test',
@@ -50,6 +60,11 @@ const QueryIndexRoute = QueryIndexRouteImport.update({
 const ParamsIndexRoute = ParamsIndexRouteImport.update({
   id: '/params/',
   path: '/params/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlockerIndexRoute = BlockerIndexRouteImport.update({
+  id: '/blocker/',
+  path: '/blocker/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TestNestedRoute = TestNestedRouteImport.update({
@@ -92,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/slug/$slug': typeof SlugSlugRoute
   '/slug/notifications': typeof SlugNotificationsRoute
   '/test/nested': typeof TestNestedRoute
+  '/blocker': typeof BlockerIndexRoute
   '/params': typeof ParamsIndexRoute
   '/query': typeof QueryIndexRoute
   '/slug/': typeof SlugIndexRoute
@@ -105,6 +121,7 @@ export interface FileRoutesByTo {
   '/slug/$slug': typeof SlugSlugRoute
   '/slug/notifications': typeof SlugNotificationsRoute
   '/test/nested': typeof TestNestedRoute
+  '/blocker': typeof BlockerIndexRoute
   '/params': typeof ParamsIndexRoute
   '/query': typeof QueryIndexRoute
   '/slug': typeof SlugIndexRoute
@@ -115,11 +132,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/slug': typeof SlugRouteRouteWithChildren
   '/test': typeof TestRouteWithChildren
+  '/context': typeof ContextRouteWithChildren
   '/context/_context': typeof ContextContextRouteRouteWithChildren
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/slug/$slug': typeof SlugSlugRoute
   '/slug/notifications': typeof SlugNotificationsRoute
   '/test/nested': typeof TestNestedRoute
+  '/blocker/': typeof BlockerIndexRoute
   '/params/': typeof ParamsIndexRoute
   '/query/': typeof QueryIndexRoute
   '/slug/': typeof SlugIndexRoute
@@ -136,6 +155,7 @@ export interface FileRouteTypes {
     | '/slug/$slug'
     | '/slug/notifications'
     | '/test/nested'
+    | '/blocker'
     | '/params'
     | '/query'
     | '/slug/'
@@ -149,6 +169,7 @@ export interface FileRouteTypes {
     | '/slug/$slug'
     | '/slug/notifications'
     | '/test/nested'
+    | '/blocker'
     | '/params'
     | '/query'
     | '/slug'
@@ -158,11 +179,13 @@ export interface FileRouteTypes {
     | '/'
     | '/slug'
     | '/test'
+    | '/context'
     | '/context/_context'
     | '/demo/tanstack-query'
     | '/slug/$slug'
     | '/slug/notifications'
     | '/test/nested'
+    | '/blocker/'
     | '/params/'
     | '/query/'
     | '/slug/'
@@ -173,13 +196,22 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SlugRouteRoute: typeof SlugRouteRouteWithChildren
   TestRoute: typeof TestRouteWithChildren
+  ContextRoute: typeof ContextRouteWithChildren
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  BlockerIndexRoute: typeof BlockerIndexRoute
   ParamsIndexRoute: typeof ParamsIndexRoute
   QueryIndexRoute: typeof QueryIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/context': {
+      id: '/context'
+      path: '/context'
+      fullPath: '/context'
+      preLoaderRoute: typeof ContextRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/test': {
       id: '/test'
       path: '/test'
@@ -222,6 +254,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ParamsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blocker/': {
+      id: '/blocker/'
+      path: '/blocker'
+      fullPath: '/blocker'
+      preLoaderRoute: typeof BlockerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/test/nested': {
       id: '/test/nested'
       path: '/nested'
@@ -252,7 +291,7 @@ declare module '@tanstack/react-router' {
     }
     '/context/_context': {
       id: '/context/_context'
-      path: ''
+      path: '/context'
       fullPath: '/context'
       preLoaderRoute: typeof ContextContextRouteRouteImport
       parentRoute: typeof ContextRoute
@@ -293,11 +332,35 @@ const TestRouteChildren: TestRouteChildren = {
 
 const TestRouteWithChildren = TestRoute._addFileChildren(TestRouteChildren)
 
+interface ContextContextRouteRouteChildren {
+  ContextContextRouteAIndexRoute: typeof ContextContextRouteAIndexRoute
+}
+
+const ContextContextRouteRouteChildren: ContextContextRouteRouteChildren = {
+  ContextContextRouteAIndexRoute: ContextContextRouteAIndexRoute,
+}
+
+const ContextContextRouteRouteWithChildren =
+  ContextContextRouteRoute._addFileChildren(ContextContextRouteRouteChildren)
+
+interface ContextRouteChildren {
+  ContextContextRouteRoute: typeof ContextContextRouteRouteWithChildren
+}
+
+const ContextRouteChildren: ContextRouteChildren = {
+  ContextContextRouteRoute: ContextContextRouteRouteWithChildren,
+}
+
+const ContextRouteWithChildren =
+  ContextRoute._addFileChildren(ContextRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SlugRouteRoute: SlugRouteRouteWithChildren,
   TestRoute: TestRouteWithChildren,
+  ContextRoute: ContextRouteWithChildren,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  BlockerIndexRoute: BlockerIndexRoute,
   ParamsIndexRoute: ParamsIndexRoute,
   QueryIndexRoute: QueryIndexRoute,
 }
