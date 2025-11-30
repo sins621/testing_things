@@ -29,8 +29,17 @@
 	},
 	"exports": {
 		"./globals.css": "./globals.css",
-		"./lib/*": "./lib/*.ts",
-		"./components/*": "./components/*.tsx",
-		"./hooks/*": "./hooks/*.ts"
+		"./lib/*": {
+			"types": "./lib/*.ts",
+			"default": "./lib/*.ts"
+		},
+		"./components/*": {
+			"types": "./components/*.tsx",
+			"default": "./components/*.tsx"
+		},
+		"./hooks/*": {
+			"types": "./hooks/*.ts",
+			"default": "./hooks/*.ts"
+		}
 	}
 }

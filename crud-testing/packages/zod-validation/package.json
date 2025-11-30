@@ -1,5 +1,5 @@
 {
-	"name": "db-sqlite",
+	"name": "zod-validation",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
@@ -11,19 +11,11 @@
 	"license": "ISC",
 	"packageManager": "pnpm@10.18.2",
 	"dependencies": {
-		"@libsql/client": "^0.15.15",
-		"dotenv": "^17.2.3",
-		"drizzle-orm": "^0.44.7"
-	},
-	"devDependencies": {
-		"drizzle-kit": "^0.31.7",
-		"tsx": "^4.20.6"
+		"db-sqlite": "workspace:*",
+		"drizzle-zod": "^0.8.3",
+		"zod": "^4.1.13"
 	},
 	"exports": {
-		"./db": {
-			"types": "./index.ts",
-			"default": "./index.ts"
-		},
 		"./schema": {
 			"types": "./schema.ts",
 			"default": "./schema.ts"

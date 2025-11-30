@@ -107,6 +107,15 @@ importers:
         specifier: ^4.20.6
         version: 4.20.6
 
+  packages/types:
+    dependencies:
+      zod:
+        specifier: ^4.1.13
+        version: 4.1.13
+      zod-validation:
+        specifier: workspace:*
+        version: link:../zod-validation
+
   packages/ui-shadcn-core:
     dependencies:
       '@radix-ui/react-accordion':
@@ -140,6 +149,18 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.0
         version: 19.2.3(@types/react@19.2.7)
+
+  packages/zod-validation:
+    dependencies:
+      db-sqlite:
+        specifier: workspace:*
+        version: link:../db-sqlite
+      drizzle-zod:
+        specifier: ^0.8.3
+        version: 0.8.3(drizzle-orm@0.44.7(@libsql/client@0.15.15)(kysely@0.28.8))(zod@4.1.13)
+      zod:
+        specifier: ^4.1.13
+        version: 4.1.13
 
 packages:
 
@@ -1613,6 +1634,12 @@ packages:
       sqlite3:
         optional: true
 
+  drizzle-zod@0.8.3:
+    resolution: {integrity: sha512-66yVOuvGhKJnTdiqj1/Xaaz9/qzOdRJADpDa68enqS6g3t0kpNkwNYjUuaeXgZfO/UWuIM9HIhSlJ6C5ZraMww==}
+    peerDependencies:
+      drizzle-orm: '>=0.36.0'
+      zod: ^3.25.0 || ^4.0.0
+
   electron-to-chromium@1.5.262:
     resolution: {integrity: sha512-NlAsMteRHek05jRUxUR0a5jpjYq9ykk6+kO0yRaMi5moe7u0fVIOeQ3Y30A8dIiWFBNUoQGi1ljb1i5VtS9WQQ==}
 
@@ -2276,6 +2303,9 @@ packages:
 
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+
+  zod@4.1.13:
+    resolution: {integrity: sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig==}
 
 snapshots:
 
@@ -3561,6 +3591,11 @@ snapshots:
       '@libsql/client': 0.15.15
       kysely: 0.28.8
 
+  drizzle-zod@0.8.3(drizzle-orm@0.44.7(@libsql/client@0.15.15)(kysely@0.28.8))(zod@4.1.13):
+    dependencies:
+      drizzle-orm: 0.44.7(@libsql/client@0.15.15)(kysely@0.28.8)
+      zod: 4.1.13
+
   electron-to-chromium@1.5.262: {}
 
   enhanced-resolve@5.18.3:
@@ -4194,3 +4229,5 @@ snapshots:
   yallist@3.1.1: {}
 
   zod@3.25.76: {}
+
+  zod@4.1.13: {}
