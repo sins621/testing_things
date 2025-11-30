@@ -1,18 +1,18 @@
-import type { z } from "zod";
 import type {
-	todoDomainSchema,
-	todoInsertSchema,
-	todoListDomainSchema,
-	todoListInsertSchema,
-	todoListPublicSchema,
-	todoListUpdateSchema,
-	todoPublicSchema,
-	todoUpdateSchema,
-	userDomainSchema,
-	userInsertSchema,
-	userPublicSchema,
-	userUpdateSchema,
-} from "zod-validation/schema";
+    todoDomainSchema,
+    todoInsertSchema,
+    todoListDomainSchema,
+    todoListInsertSchema,
+    todoListPublicSchema,
+    todoListUpdateSchema,
+    todoPublicSchema,
+    todoUpdateSchema,
+    userDomainSchema,
+    userInsertSchema,
+    userPublicSchema,
+    userUpdateSchema,
+} from "validation-zod-sqlite/schema";
+import type { z } from "zod";
 
 export type DomainUser = z.infer<typeof userDomainSchema>;
 export type PublicUser = z.infer<typeof userPublicSchema>;

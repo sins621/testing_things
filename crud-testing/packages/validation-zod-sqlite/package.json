@@ -1,5 +1,5 @@
 {
-	"name": "types",
+	"name": "validation-zod-sqlite",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
@@ -11,13 +11,14 @@
 	"license": "ISC",
 	"packageManager": "pnpm@10.18.2",
 	"dependencies": {
-		"zod": "^4.1.13",
-		"zod-validation": "workspace:*"
+		"db-sqlite": "workspace:*",
+		"drizzle-zod": "^0.8.3",
+		"zod": "^4.1.13"
 	},
 	"exports": {
-		"./types": {
-			"default": "./types.ts",
-			"types": "./types.ts"
+		"./schema": {
+			"types": "./schema.ts",
+			"default": "./schema.ts"
 		}
 	}
 }
