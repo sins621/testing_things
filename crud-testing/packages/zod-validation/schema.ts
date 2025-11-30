@@ -1,4 +1,4 @@
-import { user } from "db-sqlite/schema";
+import { todo, todoList, user } from "db-sqlite/schema";
 import {
 	createInsertSchema,
 	createSelectSchema,
@@ -39,12 +39,51 @@ export const userInsertSchema = createInsertSchema(user, {
 });
 
 export const userUpdateSchema = createUpdateSchema(user, {
+	id: z.string(),
 	name: z.string().optional(),
 	email: z.string().optional(),
 	emailVerified: z.boolean().optional(),
 	image: z.url().optional(),
 }).omit({
+	createdAt: true,
+	updatedAt: true,
+});
+
+export const todoListDomainSchema = createSelectSchema(todoList, {
+	id: z.string(),
+	title: z.string(),
+	userId: z.string(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
+	deletedAt: z.date(),
+});
+
+export const todoListPublicSchema = createSelectSchema(todoList, {
+	title: z.string(),
+	userId: z.string(),
+	createdAt: z.string(),
+}).omit({
+	id: true,
+	updatedAt: true,
+	deletedAt: true,
+});
+
+export const todoListInsertSchema = createInsertSchema(todoList, {
+	title: z.string(),
+	userId: z.string(),
+}).omit({
 	id: true,
 	createdAt: true,
 	updatedAt: true,
+	deletedAt: true,
+});
+
+export const todoListUpdateSchema = createUpdateSchema(todoList, {
+	id: z.string(),
+	title: z.string(),
+	userId: z.string(),
+}).omit({
+	createdAt: true,
+	updatedAt: true,
+	deletedAt: true,
 });
