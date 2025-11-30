@@ -18,6 +18,9 @@
 			"esbuild-kit/core-utils": "*",
 			"esbuild-kit/esm-loader": "*",
 			"node-domexception": "*"
-		}
+		},
+		"onlyBuiltDependencies": [
+			"esbuild"
+		]
 	}
 }

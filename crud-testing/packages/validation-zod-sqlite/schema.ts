@@ -93,7 +93,7 @@ export const todoDomainSchema = createSelectSchema(todo, {
 	todoListId: z.string(),
 	title: z.string(),
 	isDone: z.boolean(),
-	dueDate: z.date(),
+	dueDate: z.date().nullable(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
 	deletedAt: z.date(),

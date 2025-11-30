@@ -14,17 +14,6 @@ import type {
 } from "validation-zod-sqlite/schema";
 import type { z } from "zod";
 
-const ERROR_MESSAGES = [
-	"NOT_FOUND",
-	"UNAUTHORIZED",
-	"INVALID_INPUT",
-	"UNEXPECTED_ERROR",
-] as const;
-
-export type ErrorMessage = (typeof ERROR_MESSAGES)[number];
-
-export type Response<T> = [null, T] | [ErrorMessage, null];
-
 export type DomainUser = z.infer<typeof userDomainSchema>;
 export type PublicUser = z.infer<typeof userPublicSchema>;
 export type UpdateUser = z.infer<typeof userUpdateSchema>;

@@ -136,9 +136,14 @@ importers:
       db-sqlite:
         specifier: workspace:*
         version: link:../db-sqlite
+      types-shared:
+        specifier: workspace:*
+        version: link:../types-shared
       types-sqlite:
         specifier: workspace:*
         version: link:../types-sqlite
+
+  packages/types-shared: {}
 
   packages/types-sqlite:
     dependencies:

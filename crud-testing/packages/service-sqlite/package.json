@@ -13,6 +13,7 @@
 	"packageManager": "pnpm@10.24.0",
 	"dependencies": {
 		"db-sqlite": "workspace:*",
-		"types-sqlite": "workspace:*"
+		"types-sqlite": "workspace:*",
+		"types-shared": "workspace:*"
 	}
 }
