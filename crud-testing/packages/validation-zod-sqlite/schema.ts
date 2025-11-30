@@ -11,7 +11,7 @@ export const userDomainSchema = createSelectSchema(user, {
 	name: z.string(),
 	email: z.string(),
 	emailVerified: z.boolean(),
-	image: z.url(),
+	image: z.url().nullable(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
 });

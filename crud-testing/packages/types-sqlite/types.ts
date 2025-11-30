@@ -1,18 +1,24 @@
 import type {
-    todoDomainSchema,
-    todoInsertSchema,
-    todoListDomainSchema,
-    todoListInsertSchema,
-    todoListPublicSchema,
-    todoListUpdateSchema,
-    todoPublicSchema,
-    todoUpdateSchema,
-    userDomainSchema,
-    userInsertSchema,
-    userPublicSchema,
-    userUpdateSchema,
+	todoDomainSchema,
+	todoInsertSchema,
+	todoListDomainSchema,
+	todoListInsertSchema,
+	todoListPublicSchema,
+	todoListUpdateSchema,
+	todoPublicSchema,
+	todoUpdateSchema,
+	userDomainSchema,
+	userInsertSchema,
+	userPublicSchema,
+	userUpdateSchema,
 } from "validation-zod-sqlite/schema";
 import type { z } from "zod";
+
+const ERROR_MESSAGES = ["NOT_FOUND", "UNAUTHORIZED", "INVALID_INPUT"] as const;
+
+export type ErrorMessage = (typeof ERROR_MESSAGES)[number];
+
+export type Response<T> = [null, T] | [ErrorMessage, null];
 
 export type DomainUser = z.infer<typeof userDomainSchema>;
 export type PublicUser = z.infer<typeof userPublicSchema>;
