@@ -1,9 +1,9 @@
 import { db } from "db-sqlite/db";
 import type { Response, ServiceFilters } from "types-shared/types";
 import type {
-	DomainTodo,
-	DomainUser,
-	DomainUserWithTodoList,
+    DomainTodo,
+    DomainUser,
+    DomainUserWithTodoList,
 } from "types-sqlite/types";
 
 export async function getUsers({
@@ -13,7 +13,7 @@ export async function getUsers({
 	try {
 		const query = await db.query.user.findMany({
 			offset,
-			limit,
+			limit: limit || 100,
 		});
 		if (!query) return ["NOT_FOUND", null];
 		return [null, query];
@@ -30,7 +30,7 @@ export async function getTodos({
 	try {
 		const query = await db.query.todo.findMany({
 			offset,
-			limit,
+			limit: limit || 100,
 		});
 		if (!query) return ["NOT_FOUND", null];
 		return [null, query];
@@ -47,7 +47,7 @@ export async function getUsersWithTodos({
 	try {
 		const query = await db.query.user.findMany({
 			offset,
-			limit,
+			limit: limit || 100,
 			with: {
 				todoLists: {
 					with: {

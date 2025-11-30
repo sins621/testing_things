@@ -1,6 +1,9 @@
 {
-	"compilerOptions": {
-		"strict": true
-	}
+  "compilerOptions": {
+    "types": [
+      "node"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "bundler"
+  }
 }
-

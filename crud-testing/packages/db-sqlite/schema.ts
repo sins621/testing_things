@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const user = sqliteTable("user", {
@@ -17,12 +17,6 @@ export const user = sqliteTable("user", {
 		.$onUpdate(() => /* @__PURE__ */ new Date())
 		.notNull(),
 });
-
-export const userRelations = relations(user, ({ many }) => ({
-	sessions: many(session),
-	accounts: many(account),
-	todoLists: many(todoList),
-}));
 
 export const session = sqliteTable(
 	"session",
@@ -44,13 +38,6 @@ export const session = sqliteTable(
 	},
 	(table) => [index("session_userId_idx").on(table.userId)],
 );
-
-export const sessionRelations = relations(session, ({ one }) => ({
-	user: one(user, {
-		fields: [session.userId],
-		references: [user.id],
-	}),
-}));
 
 export const account = sqliteTable(
 	"account",
@@ -81,13 +68,6 @@ export const account = sqliteTable(
 	},
 	(table) => [index("account_userId_idx").on(table.userId)],
 );
-
-export const accountRelations = relations(account, ({ one }) => ({
-	user: one(user, {
-		fields: [account.userId],
-		references: [user.id],
-	}),
-}));
 
 export const verification = sqliteTable(
 	"verification",
@@ -126,14 +106,6 @@ export const todoList = sqliteTable("todo_list", {
 		.notNull(),
 });
 
-export const todoListRelations = relations(todoList, ({ one, many }) => ({
-	user: one(user, {
-		fields: [todoList.userId],
-		references: [user.id],
-	}),
-	todos: many(todo),
-}));
-
 export const todo = sqliteTable("todo", {
 	id: text("id").primaryKey(),
 	todoListId: text("todo_list_id")
@@ -157,9 +129,3 @@ export const todo = sqliteTable("todo", {
 		.notNull(),
 });
 
-export const todoRelations = relations(todo, ({ one }) => ({
-	todoList: one(todoList, {
-		fields: [todo.todoListId],
-		references: [todoList.id],
-	}),
-}));
