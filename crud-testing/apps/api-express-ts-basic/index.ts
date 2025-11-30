@@ -11,10 +11,14 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (_req, res) => {
-	res.send("Hello World");
-});
+const v1Router = express.Router();
+
+app.use("/api/v1", v1Router);
 
 app.listen(PORT, () => {
 	console.log("Express Listenning on Port: ", PORT);
+});
+
+v1Router.get("/", (_req, res) => {
+  res.send("Hello World");
 });
