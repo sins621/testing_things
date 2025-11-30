@@ -17,11 +17,11 @@ export const userDomainSchema = createSelectSchema(user, {
 });
 
 export const userPublicSchema = createSelectSchema(user, {
+	id: z.string(),
 	name: z.string(),
 	email: z.string(),
 	image: z.url(),
 }).omit({
-	id: true,
 	emailVerified: true,
 	createdAt: true,
 	updatedAt: true,
@@ -59,11 +59,11 @@ export const todoListDomainSchema = createSelectSchema(todoList, {
 });
 
 export const todoListPublicSchema = createSelectSchema(todoList, {
+	id: z.string(),
 	title: z.string(),
 	userId: z.string(),
 	createdAt: z.string(),
 }).omit({
-	id: true,
 	updatedAt: true,
 	deletedAt: true,
 });
@@ -80,10 +80,56 @@ export const todoListInsertSchema = createInsertSchema(todoList, {
 
 export const todoListUpdateSchema = createUpdateSchema(todoList, {
 	id: z.string(),
-	title: z.string(),
-	userId: z.string(),
+	title: z.string().optional(),
+	userId: z.string().optional(),
+	deletedAt: z.date().optional(),
 }).omit({
 	createdAt: true,
 	updatedAt: true,
+});
+
+export const todoDomainSchema = createSelectSchema(todo, {
+	id: z.string(),
+	todoListId: z.string(),
+	title: z.string(),
+	isDone: z.boolean(),
+	dueDate: z.date(),
+	createdAt: z.date(),
+	updatedAt: z.date(),
+	deletedAt: z.date(),
+});
+
+export const todoPublicSchema = createSelectSchema(todo, {
+	id: z.string(),
+	todoListId: z.string(),
+	title: z.string(),
+	isDone: z.boolean(),
+	dueDate: z.date().optional(),
+	createdAt: z.date(),
+}).omit({
+	updatedAt: true,
 	deletedAt: true,
+});
+
+export const todoInsertSchema = createInsertSchema(todo, {
+	todoListId: z.string(),
+	title: z.string(),
+	isDone: z.boolean().optional(),
+	dueDate: z.date().optional(),
+}).omit({
+	id: true,
+	updatedAt: true,
+	createdAt: true,
+	deletedAt: true,
+});
+
+export const todoUpdateSchema = createUpdateSchema(todo, {
+	id: z.string(),
+	todoListId: z.string().optional(),
+	title: z.string().optional(),
+	isDone: z.boolean().optional(),
+	dueDate: z.date().optional(),
+	deletedAt: z.date().optional(),
+}).omit({
+	updatedAt: true,
 });

@@ -131,7 +131,7 @@ export const todo = sqliteTable("todo", {
 		.notNull()
 		.references(() => todoList.id),
 	title: text("title").notNull(),
-	isDone: integer({ mode: "boolean" }),
+	isDone: integer({ mode: "boolean" }).notNull().default(false),
 	dueDate: integer("due_date", { mode: "timestamp_ms" }).$onUpdate(
 		() => /* @__PURE__ */ new Date(),
 	),

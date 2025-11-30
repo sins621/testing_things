@@ -1,9 +1,13 @@
 import type { z } from "zod";
 import type {
+	todoDomainSchema,
+	todoInsertSchema,
 	todoListDomainSchema,
 	todoListInsertSchema,
 	todoListPublicSchema,
 	todoListUpdateSchema,
+	todoPublicSchema,
+	todoUpdateSchema,
 	userDomainSchema,
 	userInsertSchema,
 	userPublicSchema,
@@ -19,3 +23,8 @@ export type DomainTodoList = z.infer<typeof todoListDomainSchema>;
 export type PublicTodoList = z.infer<typeof todoListPublicSchema>;
 export type UpdateTodoList = z.infer<typeof todoListUpdateSchema>;
 export type InsertTodoList = z.infer<typeof todoListInsertSchema>;
+
+export type DomainTodo = z.infer<typeof todoDomainSchema>;
+export type PublicTodo = z.infer<typeof todoPublicSchema>;
+export type InsertTodo = z.infer<typeof todoInsertSchema>;
+export type UpdateTodo = z.infer<typeof todoUpdateSchema>;
