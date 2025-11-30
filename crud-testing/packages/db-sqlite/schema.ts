@@ -21,6 +21,7 @@ export const user = sqliteTable("user", {
 export const userRelations = relations(user, ({ many }) => ({
 	sessions: many(session),
 	accounts: many(account),
+	todoLists: many(todoList),
 }));
 
 export const session = sqliteTable(
@@ -125,6 +126,14 @@ export const todoList = sqliteTable("todo_list", {
 		.notNull(),
 });
 
+export const todoListRelations = relations(todoList, ({ one, many }) => ({
+	user: one(user, {
+		fields: [todoList.userId],
+		references: [user.id],
+	}),
+	todos: many(todo),
+}));
+
 export const todo = sqliteTable("todo", {
 	id: text("id").primaryKey(),
 	todoListId: text("todo_list_id")
@@ -147,3 +156,10 @@ export const todo = sqliteTable("todo", {
 		.$onUpdate(() => /* @__PURE__ */ new Date())
 		.notNull(),
 });
+
+export const todoRelations = relations(todo, ({ one }) => ({
+	todoList: one(todoList, {
+		fields: [todo.todoListId],
+		references: [todoList.id],
+	}),
+}));

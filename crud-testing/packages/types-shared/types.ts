@@ -10,6 +10,6 @@ export type ErrorMessage = (typeof ERROR_MESSAGES)[number];
 export type Response<T> = [null, T] | [ErrorMessage, null];
 
 export type ServiceFilters = {
-	limit: number;
-	offset: number;
+	limit?: number;
+	offset?: number;
 };
