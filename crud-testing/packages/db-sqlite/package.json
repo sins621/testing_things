@@ -1,0 +1,22 @@
+{
+  "name": "db-sqlite",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.18.2",
+  "dependencies": {
+    "@libsql/client": "^0.15.15",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.44.7"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.7",
+    "tsx": "^4.20.6"
+  }
+}

@@ -1,10 +1,15 @@
 {
-    "extends": "//",
-    "linter": {
-        "rules": {
-            "suspicious": {
-                "noConsole": "off"
-            }
-        }
-    }
+	"extends": "//",
+	"linter": {
+		"rules": {
+			"suspicious": {
+				"noConsole": "off"
+			}
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	}
 }

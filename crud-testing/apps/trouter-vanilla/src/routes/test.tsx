@@ -6,5 +6,5 @@ export const Route = createFileRoute("/test")({
 });
 
 function RouteComponent() {
-	return <Button>Hello</Button>;
+	return <Button>Click Me</Button>;
 }
