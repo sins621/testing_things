@@ -14,7 +14,12 @@ import type {
 } from "validation-zod-sqlite/schema";
 import type { z } from "zod";
 
-const ERROR_MESSAGES = ["NOT_FOUND", "UNAUTHORIZED", "INVALID_INPUT"] as const;
+const ERROR_MESSAGES = [
+	"NOT_FOUND",
+	"UNAUTHORIZED",
+	"INVALID_INPUT",
+	"UNEXPECTED_ERROR",
+] as const;
 
 export type ErrorMessage = (typeof ERROR_MESSAGES)[number];
 

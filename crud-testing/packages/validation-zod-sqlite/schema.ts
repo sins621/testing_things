@@ -41,7 +41,7 @@ export const userInsertSchema = createInsertSchema(user, {
 export const userUpdateSchema = createUpdateSchema(user, {
 	id: z.string(),
 	name: z.string().optional(),
-	email: z.string().optional(),
+	email: z.email().optional(),
 	emailVerified: z.boolean().optional(),
 	image: z.url().optional(),
 }).omit({
@@ -104,7 +104,7 @@ export const todoPublicSchema = createSelectSchema(todo, {
 	todoListId: z.string(),
 	title: z.string(),
 	isDone: z.boolean(),
-	dueDate: z.date().optional(),
+	dueDate: z.date().nullable(),
 	createdAt: z.date(),
 }).omit({
 	updatedAt: true,
