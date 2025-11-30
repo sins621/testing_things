@@ -16,7 +16,8 @@
 		"express": "^5.1.0",
 		"helmet": "^8.1.0",
 		"morgan": "^1.10.1",
-		"service-sqlite": "workspace:*"
+		"service-sqlite": "workspace:*",
+		"types-sqlite": "workspace:*"
 	},
 	"devDependencies": {
 		"@types/cors": "^2.8.19",

@@ -29,6 +29,9 @@ importers:
       service-sqlite:
         specifier: workspace:*
         version: link:../../packages/service-sqlite
+      types-sqlite:
+        specifier: workspace:*
+        version: link:../../packages/types-sqlite
     devDependencies:
       '@types/cors':
         specifier: ^2.8.19

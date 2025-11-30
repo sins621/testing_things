@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const user = sqliteTable("user", {
@@ -112,6 +112,7 @@ export const todo = sqliteTable("todo", {
 		.notNull()
 		.references(() => todoList.id),
 	title: text("title").notNull(),
+	description: text("description"),
 	isDone: integer({ mode: "boolean" }).notNull().default(false),
 	dueDate: integer("due_date", { mode: "timestamp_ms" }).$onUpdate(
 		() => /* @__PURE__ */ new Date(),
@@ -129,3 +130,21 @@ export const todo = sqliteTable("todo", {
 		.notNull(),
 });
 
+export const userRelations = relations(user, ({ many }) => ({
+	todoLists: many(todoList),
+}));
+
+export const todoListRelations = relations(todoList, ({ one, many }) => ({
+	user: one(user, {
+		fields: [todoList.userId],
+		references: [user.id],
+	}),
+	todos: many(todo),
+}));
+
+export const todoRelations = relations(todo, ({ one }) => ({
+	todoList: one(todoList, {
+		fields: [todo.todoListId],
+		references: [todoList.id],
+	}),
+}));

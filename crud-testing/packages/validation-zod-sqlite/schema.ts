@@ -20,7 +20,7 @@ export const userPublicSchema = createSelectSchema(user, {
 	id: z.string(),
 	name: z.string(),
 	email: z.string(),
-	image: z.url(),
+	image: z.url().nullable(),
 }).omit({
 	emailVerified: true,
 	createdAt: true,
@@ -62,7 +62,7 @@ export const todoListPublicSchema = createSelectSchema(todoList, {
 	id: z.string(),
 	title: z.string(),
 	userId: z.string(),
-	createdAt: z.string(),
+	createdAt: z.date(),
 }).omit({
 	updatedAt: true,
 	deletedAt: true,
@@ -92,6 +92,7 @@ export const todoDomainSchema = createSelectSchema(todo, {
 	id: z.string(),
 	todoListId: z.string(),
 	title: z.string(),
+	description: z.string().nullable(),
 	isDone: z.boolean(),
 	dueDate: z.date().nullable(),
 	createdAt: z.date(),
@@ -103,6 +104,7 @@ export const todoPublicSchema = createSelectSchema(todo, {
 	id: z.string(),
 	todoListId: z.string(),
 	title: z.string(),
+	description: z.string().nullable(),
 	isDone: z.boolean(),
 	dueDate: z.date().nullable(),
 	createdAt: z.date(),
@@ -114,6 +116,7 @@ export const todoPublicSchema = createSelectSchema(todo, {
 export const todoInsertSchema = createInsertSchema(todo, {
 	todoListId: z.string(),
 	title: z.string(),
+	description: z.string().optional(),
 	isDone: z.boolean().optional(),
 	dueDate: z.date().optional(),
 }).omit({
@@ -127,6 +130,7 @@ export const todoUpdateSchema = createUpdateSchema(todo, {
 	id: z.string(),
 	todoListId: z.string().optional(),
 	title: z.string().optional(),
+	description: z.string().optional(),
 	isDone: z.boolean().optional(),
 	dueDate: z.date().optional(),
 	deletedAt: z.date().optional(),
