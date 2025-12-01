@@ -1,16 +1,16 @@
 import type {
-    todoDomainSchema,
-    todoInsertSchema,
-    todoListDomainSchema,
-    todoListInsertSchema,
-    todoListPublicSchema,
-    todoListUpdateSchema,
-    todoPublicSchema,
-    todoUpdateSchema,
-    userDomainSchema,
-    userInsertSchema,
-    userPublicSchema,
-    userUpdateSchema,
+	todoDomainSchema,
+	todoInsertSchema,
+	todoListDomainSchema,
+	todoListInsertSchema,
+	todoListPublicSchema,
+	todoListUpdateSchema,
+	todoPublicSchema,
+	todoUpdateSchema,
+	userDomainSchema,
+	userInsertSchema,
+	userPublicSchema,
+	userUpdateSchema,
 } from "validation-zod-sqlite/schema";
 import type { z } from "zod";
 
@@ -30,8 +30,17 @@ export type UpdateTodoList = z.infer<typeof todoListUpdateSchema>;
 export type InsertTodoList = z.infer<typeof todoListInsertSchema>;
 
 export type DomainUserWithTodoList = DomainUser & {
-	todoLists: Array<DomainTodoList & { todos: DomainTodo[] }>;
+	todoLists: DomainTodoList[];
 };
+
 export type PublicUserWithTodoList = PublicUser & {
-	todoLists: Array<PublicTodoList & { todos: PublicTodo[] }>;
+	todoLists: PublicTodoList[];
+};
+
+export type DomainTodoListWithTodos = DomainTodoList & {
+	todos: DomainTodo[];
+};
+
+export type PublicTodoListWithTodos = PublicTodoList & {
+	todos: PublicTodo[];
 };

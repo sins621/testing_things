@@ -1,21 +1,26 @@
 import { db } from "db-sqlite/db";
 import type { Response, ServiceFilters } from "types-shared/types";
 import type {
-    DomainTodo,
-    DomainUser,
-    DomainUserWithTodoList,
+	PublicTodo,
+	PublicUser,
+	PublicUserWithTodoList,
 } from "types-sqlite/types";
 
-export async function getUsers({
+export async function getPublicUsers({
 	limit,
 	offset,
-}: ServiceFilters): Promise<Response<DomainUser[]>> {
+}: ServiceFilters): Promise<Response<PublicUser[]>> {
 	try {
 		const query = await db.query.user.findMany({
 			offset,
 			limit: limit || 100,
+			columns: {
+				id: true,
+				name: true,
+				email: true,
+				image: true,
+			},
 		});
-		if (!query) return ["NOT_FOUND", null];
 		return [null, query];
 	} catch (error) {
 		console.error(error);
@@ -23,16 +28,24 @@ export async function getUsers({
 	}
 }
 
-export async function getTodos({
+export async function getPublicTodos({
 	limit,
 	offset,
-}: ServiceFilters): Promise<Response<DomainTodo[]>> {
+}: ServiceFilters): Promise<Response<PublicTodo[]>> {
 	try {
 		const query = await db.query.todo.findMany({
 			offset,
 			limit: limit || 100,
+			columns: {
+				id: true,
+				todoListId: true,
+				createdAt: true,
+				title: true,
+				description: true,
+				isDone: true,
+				dueDate: true,
+			},
 		});
-		if (!query) return ["NOT_FOUND", null];
 		return [null, query];
 	} catch (error) {
 		console.error(error);
@@ -40,23 +53,31 @@ export async function getTodos({
 	}
 }
 
-export async function getUsersWithTodos({
+export async function getPublicUsersWithTodoLists({
 	offset,
 	limit,
-}: ServiceFilters): Promise<Response<DomainUserWithTodoList[]>> {
+}: ServiceFilters): Promise<Response<PublicUserWithTodoList[]>> {
 	try {
 		const query = await db.query.user.findMany({
 			offset,
 			limit: limit || 100,
+			columns: {
+				id: true,
+				name: true,
+				email: true,
+				image: true,
+			},
 			with: {
 				todoLists: {
-					with: {
-						todos: true,
+					columns: {
+						id: true,
+						createdAt: true,
+						userId: true,
+						title: true,
 					},
 				},
 			},
 		});
-		if (!query) return ["NOT_FOUND", null];
 		return [null, query];
 	} catch (error) {
 		console.log(error);
