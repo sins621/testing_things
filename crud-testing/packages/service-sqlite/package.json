@@ -19,7 +19,7 @@
 	},
 	"exports": {
 		"./index": {
-			"default": "./index.ts",
+			"import": "./index.ts",
 			"types": "./index.ts"
 		}
 	}

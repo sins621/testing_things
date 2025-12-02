@@ -21,11 +21,11 @@
 	"exports": {
 		"./db": {
 			"types": "./index.ts",
-			"default": "./index.ts"
+			"import": "./index.ts"
 		},
 		"./schema": {
 			"types": "./schema.ts",
-			"default": "./schema.ts"
+			"import": "./schema.ts"
 		}
 	}
 }

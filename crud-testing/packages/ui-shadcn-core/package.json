@@ -1,6 +1,7 @@
 {
 	"name": "ui-shadcn-core",
 	"version": "1.0.0",
+	"type": "module",
 	"description": "",
 	"main": "index.js",
 	"scripts": {
@@ -31,15 +32,15 @@
 		"./globals.css": "./globals.css",
 		"./lib/*": {
 			"types": "./lib/*.ts",
-			"default": "./lib/*.ts"
+			"import": "./lib/*.ts"
 		},
 		"./components/*": {
 			"types": "./components/*.tsx",
-			"default": "./components/*.tsx"
+			"import": "./components/*.tsx"
 		},
 		"./hooks/*": {
 			"types": "./hooks/*.ts",
-			"default": "./hooks/*.ts"
+			"import": "./hooks/*.ts"
 		}
 	}
 }
