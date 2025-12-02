@@ -2,18 +2,18 @@ import { db } from "db-sqlite/db";
 import { todo, todoList } from "db-sqlite/schema";
 import type { Response, ServiceFilters } from "types-shared/types";
 import type {
-    DomainTodo,
-    DomainTodoList,
-    DomainUser,
-    InsertTodo,
-    InsertTodoList,
-    PublicTodo,
-    PublicTodoList,
-    PublicUser
+	DomainTodo,
+	DomainTodoList,
+	DomainUser,
+	InsertTodo,
+	InsertTodoList,
+	PublicTodo,
+	PublicTodoList,
+	PublicUser,
 } from "types-sqlite/types";
 import {
-    todoInsertSchema,
-    todoListInsertSchema
+	todoInsertSchema,
+	todoListInsertSchema,
 } from "validation-zod-sqlite/schema";
 import { DEFAULT_QUERY_LIMIT, MAX_QUERY_LIMIT } from "./constants";
 
@@ -33,6 +33,26 @@ export async function getPublicUsers({
 				email: true,
 				image: true,
 			},
+		});
+		return [null, query];
+	} catch (error) {
+		console.error(error);
+		return ["UNEXPECTED_ERROR", null];
+	}
+}
+
+export async function getPublicUserByUserId(
+	userId: string,
+): Promise<Response<PublicUser | undefined>> {
+	try {
+		const query = await db.query.user.findFirst({
+			columns: {
+				id: true,
+				name: true,
+				email: true,
+				image: true,
+			},
+			where: (user, { eq }) => eq(user.id, userId),
 		});
 		return [null, query];
 	} catch (error) {

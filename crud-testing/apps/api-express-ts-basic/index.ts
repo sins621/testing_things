@@ -3,8 +3,9 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import {
-    getPublicTodos,
-    getPublicUsers
+	getPublicTodos,
+	getPublicUserByUserId,
+	getPublicUsers,
 } from "service-sqlite/index";
 
 const app = express();
@@ -28,15 +29,25 @@ v1router.get("/", (_req, res) => {
 });
 
 v1router.get("/users/:userId", async (req, res) => {
-	if (!req.params.userId) {
-		const { limit, offset } = req.query;
-		const [error, publicUsers] = await getPublicUsers({
-			limit: Number(limit),
-			offset: Number(offset),
-		});
-		if (error) return res.status(500);
-		return res.json(publicUsers);
+	const { userId } = req.params;
+
+	if (userId) {
+		const [error, publicUser] = await getPublicUserByUserId(userId);
+
+		if (error === "UNEXPECTED_ERROR") return res.sendStatus(500);
+		if (error === "INVALID_INPUT") return res.sendStatus(400);
+		if (!publicUser) return res.sendStatus(204);
+
+		return res.json({user: publicUser})
 	}
+
+	const { limit, offset } = req.query;
+	const [error, publicUsers] = await getPublicUsers({
+		limit: Number(limit),
+		offset: Number(offset),
+	});
+	if (error) return res.status(500);
+	return res.json({ users: publicUsers });
 });
 
 v1router.get("/todos", async (req, res) => {
@@ -46,5 +57,5 @@ v1router.get("/todos", async (req, res) => {
 		offset: Number(offset),
 	});
 	if (error) return res.status(500);
-	return res.json(publicTodos);
+	return res.json({ todos: publicTodos });
 });
