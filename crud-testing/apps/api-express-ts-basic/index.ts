@@ -3,6 +3,7 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import {
+	getPublicTodoById,
 	getPublicTodoListById,
 	getPublicTodoLists,
 	getPublicTodoListsByUserId,
@@ -91,7 +92,19 @@ v1router.get("/todolists{/:todoListId}", async (req, res) => {
 	return res.json({ todoLists: publicTodoLists });
 });
 
-v1router.get("/todos", async (req, res) => {
+v1router.get("/todos{/:todoId?}", async (req, res) => {
+	const { todoId } = req.params;
+
+	if (todoId) {
+		const [error, publicTodo] = await getPublicTodoById(todoId);
+
+		if (error === "UNEXPECTED_ERROR") return res.sendStatus(500);
+		if (error === "INVALID_INPUT") return res.sendStatus(400);
+		if (!publicTodo) return res.sendStatus(204);
+
+		return res.json({ todoList: publicTodo });
+	}
+
 	const { limit, offset } = req.query;
 	const [error, publicTodos] = await getPublicTodos({
 		limit: Number(limit),

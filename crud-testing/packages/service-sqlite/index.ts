@@ -191,6 +191,29 @@ export async function getPublicTodos({
 	}
 }
 
+export async function getPublicTodoById(
+	id: string,
+): Promise<Response<PublicTodo | undefined>> {
+	try {
+		const query = await db.query.todo.findFirst({
+			columns: {
+				id: true,
+				createdAt: true,
+				title: true,
+				description: true,
+				todoListId: true,
+				isDone: true,
+				dueDate: true,
+			},
+			where: (todo, { eq }) => eq(todo.id, id),
+		});
+		return [null, query];
+	} catch (error) {
+		console.error(error);
+		return ["UNEXPECTED_ERROR", null];
+	}
+}
+
 export async function getDomainTodos({
 	offset,
 	limit = DEFAULT_QUERY_LIMIT,
