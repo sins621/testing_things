@@ -1,3 +1,4 @@
+import { createId } from "@paralleldrive/cuid2";
 import { relations, sql } from "drizzle-orm";
 import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
@@ -88,7 +89,9 @@ export const verification = sqliteTable(
 );
 
 export const todoList = sqliteTable("todo_list", {
-	id: text("id").primaryKey(),
+	id: text("id")
+		.primaryKey()
+		.$defaultFn(() => createId()),
 	userId: text("user_id")
 		.notNull()
 		.references(() => user.id),
@@ -100,14 +103,13 @@ export const todoList = sqliteTable("todo_list", {
 		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
 		.$onUpdate(() => /* @__PURE__ */ new Date())
 		.notNull(),
-	deletedAt: integer("deleted_at", { mode: "timestamp_ms" })
-		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-		.$onUpdate(() => /* @__PURE__ */ new Date())
-		.notNull(),
+	deletedAt: integer("deleted_at", { mode: "timestamp_ms" }),
 });
 
 export const todo = sqliteTable("todo", {
-	id: text("id").primaryKey(),
+	id: text("id")
+		.primaryKey()
+		.$defaultFn(() => createId()),
 	todoListId: text("todo_list_id")
 		.notNull()
 		.references(() => todoList.id),
@@ -124,10 +126,7 @@ export const todo = sqliteTable("todo", {
 		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
 		.$onUpdate(() => /* @__PURE__ */ new Date())
 		.notNull(),
-	deletedAt: integer("deleted_at", { mode: "timestamp_ms" })
-		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-		.$onUpdate(() => /* @__PURE__ */ new Date())
-		.notNull(),
+	deletedAt: integer("deleted_at", { mode: "timestamp_ms" }),
 });
 
 export const userRelations = relations(user, ({ many }) => ({

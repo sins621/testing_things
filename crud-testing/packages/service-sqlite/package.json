@@ -13,8 +13,9 @@
 	"packageManager": "pnpm@10.24.0",
 	"dependencies": {
 		"db-sqlite": "workspace:*",
+		"types-shared": "workspace:*",
 		"types-sqlite": "workspace:*",
-		"types-shared": "workspace:*"
+		"validation-zod-sqlite": "workspace:*"
 	},
 	"exports": {
 		"./index": {

@@ -3,9 +3,8 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import {
-	getPublicTodos,
-	getPublicUsers,
-	getPublicUsersWithTodoLists,
+    getPublicTodos,
+    getPublicUsers
 } from "service-sqlite/index";
 
 const app = express();
@@ -28,14 +27,16 @@ v1router.get("/", (_req, res) => {
 	res.send("hello world");
 });
 
-v1router.get("/users", async (req, res) => {
-	const { limit, offset } = req.query;
-	const [error, publicUsers] = await getPublicUsers({
-		limit: Number(limit),
-		offset: Number(offset),
-	});
-	if (error) return res.status(500);
-	return res.json(publicUsers);
+v1router.get("/users/:userId", async (req, res) => {
+	if (!req.params.userId) {
+		const { limit, offset } = req.query;
+		const [error, publicUsers] = await getPublicUsers({
+			limit: Number(limit),
+			offset: Number(offset),
+		});
+		if (error) return res.status(500);
+		return res.json(publicUsers);
+	}
 });
 
 v1router.get("/todos", async (req, res) => {
@@ -46,15 +47,4 @@ v1router.get("/todos", async (req, res) => {
 	});
 	if (error) return res.status(500);
 	return res.json(publicTodos);
-});
-
-v1router.get("/users/todo_lists", async (req, res) => {
-	const { limit, offset } = req.query;
-	const [error, publicUsersWithTodoLists] = await getPublicUsersWithTodoLists({
-		limit: Number(limit),
-		offset: Number(offset),
-	});
-	if (error) return res.status(500);
-
-	return res.json(publicUsersWithTodoLists);
 });

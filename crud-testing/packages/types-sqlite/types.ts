@@ -28,19 +28,3 @@ export type DomainTodoList = z.infer<typeof todoListDomainSchema>;
 export type PublicTodoList = z.infer<typeof todoListPublicSchema>;
 export type UpdateTodoList = z.infer<typeof todoListUpdateSchema>;
 export type InsertTodoList = z.infer<typeof todoListInsertSchema>;
-
-export type DomainUserWithTodoList = DomainUser & {
-	todoLists: DomainTodoList[];
-};
-
-export type PublicUserWithTodoList = PublicUser & {
-	todoLists: PublicTodoList[];
-};
-
-export type DomainTodoListWithTodos = DomainTodoList & {
-	todos: DomainTodo[];
-};
-
-export type PublicTodoListWithTodos = PublicTodoList & {
-	todos: PublicTodo[];
-};

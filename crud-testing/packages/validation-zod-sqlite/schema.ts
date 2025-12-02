@@ -55,7 +55,7 @@ export const todoListDomainSchema = createSelectSchema(todoList, {
 	userId: z.string(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
-	deletedAt: z.date(),
+	deletedAt: z.date().nullable(),
 });
 
 export const todoListPublicSchema = createSelectSchema(todoList, {
@@ -97,7 +97,7 @@ export const todoDomainSchema = createSelectSchema(todo, {
 	dueDate: z.date().nullable(),
 	createdAt: z.date(),
 	updatedAt: z.date(),
-	deletedAt: z.date(),
+	deletedAt: z.date().nullable(),
 });
 
 export const todoPublicSchema = createSelectSchema(todo, {
