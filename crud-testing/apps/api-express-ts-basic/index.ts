@@ -92,7 +92,7 @@ v1router.get("/todolists{/:todoListId}", async (req, res) => {
 	return res.json({ todoLists: publicTodoLists });
 });
 
-v1router.get("/todos{/:todoId?}", async (req, res) => {
+v1router.get("/todos{/:todoId}", async (req, res) => {
 	const { todoId } = req.params;
 
 	if (todoId) {
