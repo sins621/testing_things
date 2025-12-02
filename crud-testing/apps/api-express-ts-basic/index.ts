@@ -3,8 +3,11 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import {
+	getPublicTodoListById,
+	getPublicTodoLists,
+	getPublicTodoListsByUserId,
 	getPublicTodos,
-	getPublicUserByUserId,
+	getPublicUserById,
 	getPublicUsers,
 } from "service-sqlite/index";
 
@@ -28,17 +31,17 @@ v1router.get("/", (_req, res) => {
 	res.send("hello world");
 });
 
-v1router.get("/users/:userId", async (req, res) => {
+v1router.get("/users{/:userId}", async (req, res) => {
 	const { userId } = req.params;
 
 	if (userId) {
-		const [error, publicUser] = await getPublicUserByUserId(userId);
+		const [error, publicUser] = await getPublicUserById(userId);
 
 		if (error === "UNEXPECTED_ERROR") return res.sendStatus(500);
 		if (error === "INVALID_INPUT") return res.sendStatus(400);
 		if (!publicUser) return res.sendStatus(204);
 
-		return res.json({user: publicUser})
+		return res.json({ user: publicUser });
 	}
 
 	const { limit, offset } = req.query;
@@ -46,8 +49,46 @@ v1router.get("/users/:userId", async (req, res) => {
 		limit: Number(limit),
 		offset: Number(offset),
 	});
-	if (error) return res.status(500);
+	if (error === "UNEXPECTED_ERROR") return res.sendStatus(500);
+	if (error === "INVALID_INPUT") return res.sendStatus(400);
 	return res.json({ users: publicUsers });
+});
+
+v1router.get("/todolists{/:todoListId}", async (req, res) => {
+	const { todoListId } = req.params;
+
+	if (todoListId) {
+		const [error, publicTodoList] = await getPublicTodoListById(todoListId);
+
+		if (error === "UNEXPECTED_ERROR") return res.sendStatus(500);
+		if (error === "INVALID_INPUT") return res.sendStatus(400);
+		if (!publicTodoList) return res.sendStatus(204);
+
+		return res.json({ todoList: publicTodoList });
+	}
+
+	const { userId, offset, limit } = req.query;
+
+	if (userId) {
+		const [error, publicTodoLists] = await getPublicTodoListsByUserId(
+			userId.toString(),
+			{ offset: Number(offset), limit: Number(limit) },
+		);
+
+		if (error === "UNEXPECTED_ERROR") return res.sendStatus(500);
+		if (error === "INVALID_INPUT") return res.sendStatus(400);
+		if (!publicTodoLists) return res.sendStatus(204);
+
+		return res.json({ todoLists: publicTodoLists });
+	}
+
+	const [error, publicTodoLists] = await getPublicTodoLists({
+		limit: Number(limit),
+		offset: Number(offset),
+	});
+	if (error === "UNEXPECTED_ERROR") return res.sendStatus(500);
+	if (error === "INVALID_INPUT") return res.sendStatus(400);
+	return res.json({ todoLists: publicTodoLists });
 });
 
 v1router.get("/todos", async (req, res) => {
@@ -56,6 +97,8 @@ v1router.get("/todos", async (req, res) => {
 		limit: Number(limit),
 		offset: Number(offset),
 	});
-	if (error) return res.status(500);
+
+	if (error === "UNEXPECTED_ERROR") return res.sendStatus(500);
+	if (error === "INVALID_INPUT") return res.sendStatus(400);
 	return res.json({ todos: publicTodos });
 });

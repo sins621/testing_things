@@ -41,8 +41,8 @@ export async function getPublicUsers({
 	}
 }
 
-export async function getPublicUserByUserId(
-	userId: string,
+export async function getPublicUserById(
+	id: string,
 ): Promise<Response<PublicUser | undefined>> {
 	try {
 		const query = await db.query.user.findFirst({
@@ -52,7 +52,7 @@ export async function getPublicUserByUserId(
 				email: true,
 				image: true,
 			},
-			where: (user, { eq }) => eq(user.id, userId),
+			where: (user, { eq }) => eq(user.id, id),
 		});
 		return [null, query];
 	} catch (error) {
@@ -113,6 +113,49 @@ export async function getPublicTodoLists({
 				title: true,
 				userId: true,
 			},
+		});
+		return [null, query];
+	} catch (error) {
+		console.error(error);
+		return ["UNEXPECTED_ERROR", null];
+	}
+}
+
+export async function getPublicTodoListById(
+	id: string,
+): Promise<Response<PublicTodoList | undefined>> {
+	try {
+		const query = await db.query.todoList.findFirst({
+			columns: {
+				id: true,
+				createdAt: true,
+				title: true,
+				userId: true,
+			},
+			where: (todoList, { eq }) => eq(todoList.id, id),
+		});
+		return [null, query];
+	} catch (error) {
+		console.error(error);
+		return ["UNEXPECTED_ERROR", null];
+	}
+}
+
+export async function getPublicTodoListsByUserId(
+	userId: string,
+	{ offset, limit = DEFAULT_QUERY_LIMIT }: ServiceFilters = {},
+): Promise<Response<PublicTodoList[]>> {
+	try {
+		const query = await db.query.todoList.findMany({
+			offset,
+			limit: limit,
+			columns: {
+				id: true,
+				createdAt: true,
+				title: true,
+				userId: true,
+			},
+			where: (todoList, { eq }) => eq(todoList.userId, userId),
 		});
 		return [null, query];
 	} catch (error) {
