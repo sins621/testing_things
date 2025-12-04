@@ -1,7 +1,6 @@
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import path from 'path'
+const __dirname = path.resolve();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+export const DB_FILE_NAME = path.join(__dirname, "..", 'db-sqlite', 'local.db')
 
-export const DB_FILE_NAME = `file:${join(__dirname, "local.db")}` as const;
+console.log(DB_FILE_NAME)

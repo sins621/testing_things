@@ -21,7 +21,8 @@
 			"node-domexception": "*"
 		},
 		"onlyBuiltDependencies": [
-			"esbuild"
+			"esbuild",
+			"sharp"
 		]
 	}
 }

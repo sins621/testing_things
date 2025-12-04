@@ -3,7 +3,8 @@
 	"name": "db-sqlite",
 	"type": "module",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+	  "db:seed": "pnpm tsx ./seed.ts",
+		"db:push": "pnpm drizzle-kit push"
 	},
 	"packageManager": "pnpm@10.18.2",
 	"dependencies": {
