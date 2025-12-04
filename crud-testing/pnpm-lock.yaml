@@ -46,7 +46,7 @@ importers:
         specifier: ^1.9.10
         version: 1.9.10
 
-  apps/nextjs-15-testing:
+  apps/web-nextjs-15-testing:
     dependencies:
       next:
         specifier: 15.5.7

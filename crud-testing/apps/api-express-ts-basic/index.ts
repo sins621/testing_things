@@ -3,14 +3,18 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import {
-	getPublicTodoById,
+	getPublicUserById,
+	getPublicUsers,
+} from "service-sqlite/models/user";
+import {
 	getPublicTodoListById,
 	getPublicTodoLists,
 	getPublicTodoListsByUserId,
+} from "service-sqlite/models/todoList";
+import {
+	getPublicTodoById,
 	getPublicTodos,
-	getPublicUserById,
-	getPublicUsers,
-} from "service-sqlite/index";
+} from "service-sqlite/models/todo";
 
 const app = express();
 const port = 8000 as const;

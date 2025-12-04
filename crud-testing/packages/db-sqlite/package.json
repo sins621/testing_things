@@ -4,7 +4,8 @@
 	"type": "module",
 	"scripts": {
 	  "db:seed": "pnpm tsx ./seed.ts",
-		"db:push": "pnpm drizzle-kit push"
+		"db:push": "pnpm drizzle-kit push",
+		"db:studio": "pnpm drizzle-kit studio"
 	},
 	"packageManager": "pnpm@10.18.2",
 	"dependencies": {
