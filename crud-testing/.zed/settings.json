@@ -5,14 +5,16 @@
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
-			}
+			},
+			"language_servers": ["tsgo", "vtsls"]
 		},
 		"TypeScript": {
 			"formatter": { "language_server": { "name": "biome" } },
 			"code_actions_on_format": {
 				"source.fixAll.biome": true,
 				"source.organizeImports.biome": true
-			}
+			},
+			"language_servers": ["tsgo", "vtsls"]
 		},
 		"TSX": {
 			"formatter": { "language_server": { "name": "biome" } },
@@ -20,8 +22,9 @@
 				"source.fixAll.biome": true,
 
 				"source.organizeImports.biome": true
-			}
-		},
+			},
+			"language_servers": ["tsgo", "vtsls"]
+},
 		"JSON": { "formatter": { "language_server": { "name": "biome" } } },
 		"JSONC": { "formatter": { "language_server": { "name": "biome" } } },
 		"CSS": { "formatter": { "language_server": { "name": "biome" } } }
