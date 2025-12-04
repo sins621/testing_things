@@ -20,5 +20,10 @@
 			"import": "./types.ts",
 			"types": "./types.ts"
 		}
+	},
+	"allowedDeprecatedVersions": {
+		"esbuild-kit/core-utils": "*",
+		"esbuild-kit/esm-loader": "*",
+		"node-domexception": "*"
 	}
 }

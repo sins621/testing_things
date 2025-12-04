@@ -1,6 +1,6 @@
 import { db } from "db-sqlite/db";
-import { Response, ServiceFilters } from "types-shared/types";
-import { DomainUser, PublicUser } from "types-sqlite/types";
+import { type Response, type ServiceFilters } from "types-shared/types";
+import { type DomainUser, type PublicUser } from "types-sqlite/types";
 import { DEFAULT_QUERY_LIMIT, MAX_QUERY_LIMIT } from "../constants";
 
 export async function getPublicUsers({

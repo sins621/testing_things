@@ -127,7 +127,7 @@ export const todoInsertSchema = createInsertSchema(todo, {
 });
 
 export const todoUpdateSchema = createUpdateSchema(todo, {
-	id: z.string(),
+  id: z.string(),
 	todoListId: z.string().optional(),
 	title: z.string().optional(),
 	description: z.string().optional(),

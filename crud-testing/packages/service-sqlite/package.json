@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "type": "module",
   "description": "",
-  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +12,7 @@
   "packageManager": "pnpm@10.24.0",
   "dependencies": {
     "db-sqlite": "workspace:*",
+    "drizzle-orm": "^0.44.7",
     "types-shared": "workspace:*",
     "types-sqlite": "workspace:*",
     "validation-zod-sqlite": "workspace:*"
@@ -22,5 +22,10 @@
       "types": "./models/*.ts",
       "import": "./models/*.ts"
     }
-  }
+  },
+	"allowedDeprecatedVersions": {
+		"esbuild-kit/core-utils": "*",
+		"esbuild-kit/esm-loader": "*",
+		"node-domexception": "*"
+	}
 }

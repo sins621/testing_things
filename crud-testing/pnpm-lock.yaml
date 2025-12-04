@@ -195,6 +195,9 @@ importers:
       db-sqlite:
         specifier: workspace:*
         version: link:../db-sqlite
+      drizzle-orm:
+        specifier: ^0.44.7
+        version: 0.44.7(@libsql/client@0.15.15)(kysely@0.28.8)
       types-shared:
         specifier: workspace:*
         version: link:../types-shared
